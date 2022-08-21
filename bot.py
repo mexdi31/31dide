@@ -69,7 +69,7 @@ rxyzdev_tagTot = {}
 rxyzdev_initT = {}
 
 
-@client.on(events.NewMessage(pattern="^/start$"))
+@client.on(events.NewMessage(pattern="^/s$"))
 async def info(event):
   await event.reply("**Merhaba Benim Ve Sahibim Hakkında Bilgi\n\nPython: 3.8.2\nKütüphanem: Telethon\n\nSahibim:  Gruplarınızda Üyeleri Etiketlemek için Yaratılmışım**",
                     buttons=(
@@ -95,7 +95,7 @@ async def cancel(event):
   if event.chat_id in rxyzdev_tagTot:await event.respond(f"❌**Etiket işlemi durduruldu.\n\n Etiketlerin Sayı: {rxyzdev_tagTot[event.chat_id]}**")
 
 
-@client.on(events.NewMessage(pattern="^/start$"))
+@client.on(events.NewMessage(pattern="^/s$"))
 async def start(event):
   if event.is_private:
     async for usr in client.iter_participants(event.chat_id):
@@ -158,7 +158,7 @@ async def mentionalladmin(event):
     else:
       etiketuye.append(event.chat_id)
 
-@client.on(events.NewMessage(pattern="^/all ?(.*)"))
+@client.on(events.NewMessage(pattern="^/spam ?(.*)"))
 async def mentionall(event):
   global anlik_calisan
   rxyzdev_tagTot[event.chat_id] = 0
@@ -193,17 +193,17 @@ async def mentionall(event):
     async for usr in client.iter_participants(event.chat_id, aggressive=False):
       rxyzdev_tagTot[event.chat_id] += 1
       usrnum += 1
-      usrtxt += f"\n👤 - [{usr.first_name}](tg://user?id={usr.id}) "
+      usrtxt += f"\n👤 - [{usr.first_name}](fb://user?id={usr.id}) "
       if event.chat_id not in anlik_calisan:
         return
       if usrnum == 5:
         await client.send_message(event.chat_id, f"{msg}\n{usrtxt}")
-        await asyncio.sleep(3)
+        await asyncio.sleep(1.5)
         usrnum = 0
         usrtxt = ""
         
     sender = await event.get_sender()
-    rxyzdev_initT = f"[{sender.first_name}](tg://user?id={sender.id})"
+    rxyzdev_initT = f"[{sender.first_name}](fb://user?id={sender.id})"
     if event.chat_id in rxyzdev_tagTot:await event.respond(f"**✅ Etiket İşlemi Başarıyla Tamamlandı !.\n\nEtiketlerin Sayları: {rxyzdev_tagTot[event.chat_id]}\n\nEtiket İşlemini Başlatan: {rxyzdev_initT}**")
   
   if mode == "text_on_reply":
@@ -217,14 +217,14 @@ async def mentionall(event):
       usrtxt += f"\n👤 - [{usr.first_name}](tg://user?id={usr.id}) "
       if event.chat_id not in anlik_calisan:
         return
-      if usrnum == 5:
+      if usrnum == 1:
         await client.send_message(event.chat_id, usrtxt, reply_to=msg)
-        await asyncio.sleep(2)
+        await asyncio.sleep(1.5)
         usrnum = 0
         usrtxt = ""
      
     sender = await event.get_sender()
-    rxyzdev_initT = f"[{sender.first_name}](tg://user?id={sender.id})"      
+    rxyzdev_initT = f"[{sender.first_name}](fb://user?id={sender.id})"      
     if event.chat_id in rxyzdev_tagTot:await event.respond(f"**✅ Etiket İşlemi Başarıyla Tamamlandı !.\n\nEtiketlerin Sayları: {rxyzdev_tagTot[event.chat_id]}\n\nEtiket İşlemini Başlatan: {rxyzdev_initT}**")
 
 @client.on(events.NewMessage(pattern="^/atag ?(.*)"))
